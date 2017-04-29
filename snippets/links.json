@@ -1,0 +1,40 @@
+{
+  "List comprehension": {
+    "prefix": "for",
+    "body": [
+      "for (${x} <- ${xs})",
+      "\t${<body>}"
+    ]
+  },
+  "Switch-Case": {
+    "prefix": "switch",
+    "body": [
+      "switch (${<subject>}) {",
+      "\tcase ${<case>} -> ${<body>}",
+      "}"
+    ],
+    "description": "Switch-case block"
+  },
+  "Case": {
+    "prefix": "case",
+    "body": "case ${<case>} -> ${<body>}"
+  },
+  "Database": {
+    "prefix": "database",
+    "body": [
+      "database \"${<database-name>}\" \"${<diver-name>}\" \"${<parameter-string>}\""
+    ],
+    "description": "Definition of database-connection"
+  },
+  "Table": {
+    "prefix": "table",
+    "body": [
+      "table \"${<table-name>}\"",
+      "\twith (",
+      "\t\t\"${<row-type>}\"",
+      "\t)",
+      "\tfrom \"${<database-connection>}\""
+    ],
+    "description": "Definition of a database-table"
+  }
+}

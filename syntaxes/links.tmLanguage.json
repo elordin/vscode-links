@@ -1,0 +1,241 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Links",
+	"patterns": [
+		{
+			"include": "#xml-literals"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#literals"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#lists"
+		},
+		{
+			"include": "#patternMatching"
+		},
+		{
+			"include": "#records"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#variantTypes"
+		},
+		{
+			"include": "#forms"
+		},
+		{
+			"include": "#database"
+		},
+		{
+			"include": "#regex"
+		}
+	],
+	"repository": {
+		"comments": {
+			"match": "#.*",
+			"name": "comment.line",
+			"patterns": [
+				{
+					"match": "#.*",
+					"name": "comment.line"
+				}
+			]		},
+		"keywords": {
+			"patterns": [
+				{
+					"match": "\\b(if|else|var|receive|spawn|page|typename|client|server)\\b",
+					"name": "keyword.control.links"
+				}
+			]
+		},
+		"functions": {
+			"patterns": [
+				{
+					"begin": "(sig)\\s+([a-z][A-Za-z0-9_]*)\\s*:",
+					"end": "\n",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control"
+						},
+						"2": {
+							"name": "entity.name.function"
+						}
+					},
+					"patterns": [
+						{ "include": "#types" },
+						{ "include": "#operators" }
+					]
+				},
+				{
+					"begin": "(fun)\\s+([a-z][A-Za-z0-9_]*)?\\s*\\(",
+					"end": "\\)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control"
+						},
+						"2": {
+							"name": "entity.name.function"
+						}
+					},
+					"patterns": [
+						{
+							"match": "\\s*([a-zA-Z$_][a-zA-Z0-9$_]*)\\s*(:\\s*([A-Z][A-Za-z0-9_]*)\\s*)?,?",
+							"captures": {
+								"1": {
+									"name": "variable.parameter"
+								},
+								"3": {
+									"name": "storage.type"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"literals": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.links",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.links",
+							"match": "\\\\."
+						}
+					]
+				},
+				{
+					"name": "string.quoted.single.links",
+					"match": "'\\\\?.'"
+				},
+				{
+					"name": "constant.numeric.links",
+					"match": "\\b([0-9]+|[0-9]+\\.[0-9]*)|([0-9]*\\.[0-9]+)\\b"
+				},
+				{
+					"name": "constant.other",
+					"match": "\\b(true|false)\\b"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"comment": "Taken from the Haskell tmLanguage file by Justus Adam",
+					"match": "[\\p{S}\\p{P}&&[^(),;\\[\\]`{}_\"']]+",
+					"name": "keyword.operator"
+				}
+			]
+		},
+		"lists": {
+			"patterns": [
+				{
+					"match": "\\[\\s*\\]",
+					"name": "constant.other.links"
+				},
+				{
+					"comment": "List comprehension",
+					"match": "\\b(for|where|orderby)\\b",
+					"name": "keyword.control.links"
+				}
+			]
+		},
+		"patternMatching": {
+			"patterns": [
+				{
+					"match": "\\b(switch|case)\\b",
+					"name": "keyword.control.links"
+				}
+			]
+		},
+		"records": {
+			"patterns": []
+		},
+		"types": {
+			"patterns": [
+				{
+					"match": "\\b[A-Z][A-Za-z0-9]*\\b",
+					"name": "storage.type"
+				},
+				{
+					"name": "storage.type.unit.links",
+					"match": "\\b\\(\\s*\\)\\b"
+				}
+
+			]
+		},
+		"variantTypes": {
+			"patterns": [
+				{
+					"begin": "\\[\\|",
+					"end": "\\|\\]",
+					"name": "keyword.operator",
+					"patterns": [
+						{ "include": "#literals" },
+						{ "include": "#types" },
+						{ "include": "#operators" }
+					]
+				}
+			]
+		},
+		"xml-literals": {
+      "patterns": [
+        {
+          "begin": "</?([a-zA-Z0-9]+)",
+          "beginCaptures": {
+            "1": { "name": "entity.name.tag" }
+          },
+					"end": "/?>",
+          "patterns": [
+            { "include": "#xml-literals" },
+            { "include": "#xml-attributes" }
+          ]
+        }
+      ]
+    },
+		"xml-attributes": {
+      "patterns": [
+				{
+					"captures": {
+						"1": { "name": "entity.other.attribute-name" },
+						"2": { "name": "entity.other.attribute-name" },
+						"4": { "name": "string.quoted.double" }
+					},
+					"match": "(\\w+:)?(\\w+)(=(\"[^\"]*\"))?"
+				}
+      ]
+    },
+		"forms": {
+			"patterns": []
+		},
+		"database": {
+			"patterns": [
+				{
+					"match": "\\b(query|database|table|with|from|readonly)\\b",
+					"name": "keyword.control.links"
+				}
+			]
+		},
+		"regex": {
+			"patterns": []
+		}
+	},
+	"scopeName": "source.links"
+}

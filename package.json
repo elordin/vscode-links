@@ -1,0 +1,32 @@
+{
+    "name": "links",
+    "displayName": "Links",
+    "description": "Language support for the links programming language",
+    "version": "0.0.1",
+    "publisher": "Thomas Weber",
+    "engines": {
+        "vscode": "^1.11.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "links",
+            "aliases": ["Links", "links"],
+            "extensions": [".links"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "links",
+            "scopeName": "source.links",
+            "path": "./syntaxes/links.tmLanguage.json"
+        }],
+        "snippets": [
+			{
+				"language": "links",
+				"path": "./snippets/links.json"
+			}
+		]
+    }
+}
