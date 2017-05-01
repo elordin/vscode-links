@@ -47,14 +47,17 @@
 	],
 	"repository": {
 		"comments": {
-			"match": "#.*",
-			"name": "comment.line",
 			"patterns": [
 				{
-					"match": "#.*",
-					"name": "comment.line"
+					"match": "#\\s*(@(returns?|param|see|throws)\\s+(\\{[^}]+\\})?)?.*",
+					"name": "comment.line",
+					"captures": {
+						"1": { "name": "storage.type" },
+						"3": { "name": "entity.name.class" }
+					}
 				}
-			]		},
+			]
+		},
 		"keywords": {
 			"patterns": [
 				{
@@ -83,7 +86,7 @@
 				},
 				{
 					"begin": "(fun)\\s+([a-z][A-Za-z0-9_]*)?\\s*\\(",
-					"end": "\\)",
+					"end": "\\{",
 					"beginCaptures": {
 						"1": {
 							"name": "keyword.control"
@@ -105,6 +108,11 @@
 							}
 						}
 					]
+				},
+				{
+					"match": "(`)[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}']*(`)",
+					"name": "keyword.operator.function.infix.haskell",
+					"comment": "Haskell-style infix operators"
 				}
 			]
 		},
@@ -197,6 +205,13 @@
 		},
 		"xml-literals": {
       "patterns": [
+				{
+					"match": "</?(#)>",
+					"name": "string.xml",
+					"captures": {
+						"1": { "name": "entity.name.tag" }
+					}
+				},
         {
           "begin": "</?([a-zA-Z0-9]+)",
           "beginCaptures": {
@@ -228,7 +243,7 @@
 		"database": {
 			"patterns": [
 				{
-					"match": "\\b(query|database|table|with|from|readonly)\\b",
+					"match": "\\b(query|database|table|with|from|readonly|update|set|delete|where|default|insert|values)\\b",
 					"name": "keyword.control.links"
 				}
 			]
